@@ -26,6 +26,8 @@
 				<tr>
 					<th>ID</th>
 					<th>Título</th>
+
+					<th>Ações</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,11 +36,16 @@
 				<tr>
 					<td>{{$categoria['id']}}</td>
 					<td>{{$categoria['titulo']}}</td>
-				</tr>
-				@endforeach
-			</tbody>
-		</table>
-		@endif
-	</div>
-</div>
-@endsection
+					<td><a href="{{action('CategoriaController@edit', $categoria['id'])}}" class="btn btn-warning">Editar</a></td>
+					<td>
+						<form action="{{action('CategoriaController@destroy', $categoria['id'])}}" method="post">
+							<input name="_method" type="hidden" value="DELETE">
+							<button class="btn btn-danger" type="submit">Excluir</button>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+				@endif
+			</div>
+		</div>
+		@endsection

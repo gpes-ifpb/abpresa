@@ -5,7 +5,7 @@
 <form method="post" action="{{url('categoria')}}">
 	<h3>Cadastrar nova categoria</h3>
 	<div class="form-group">
-		<label for="staticEmail">Título</label>
+		<label>Título</label>
 		<input type="text" name="titulo" class="form-control">
 		<small class="form-text text-muted">Informe o título da nova categoria</small>
 	</div>
