@@ -1,51 +1,123 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Ambiente de Boas Práticas Reconfiguráveis de Engenharia de Software (ABPRES)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Equipe
 
-## About Laravel
+- Helder Rangel [@helder-rangel](https://github.com/helder-rangel)
+- Matheus Augusto [@mattaugusto](https://github.com/mattaugusto)
+- Maurício de Lira [@mauriciodelira](https://github.com/mauriciodelira)
+- Rafael Cardoso [@rcardosoo](https://github.com/rcardosoo)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Para melhor visão geral do projeto...
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
 
-## Learning Laravel
+## Requisitos iniciais
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+- Linux + GitFlow (ou windows com Git Bash mais recente - já vem com `git-flow`)
+- Editor de texto ou IDE
+- PostgreSQL instalado
+- PHP 7.1
+- Composer
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+### Para linux
 
-## Laravel Sponsors
+```
+sudo apt-get install git-flow
+sudo apt-get install postgres-9.6
+sudo apt-get install pgadmin3           // se preferir a GUI do pgAdmin
+sudo apt-get install php7.1
+sudo apt-get install php7.1-pgsql
+sudo apt-get install php7.1-xml         // nem sempre necessário
+sudo apt-get install php7.1-json        // nem sempre necessário
+sudo apt-get install php7.1-mbstring    // nem sempre necessário
+sudo apt-get install php7.1-zip         // nem sempre necessário
+sudo apt-get install composer
+```
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+Uma vez com as dependências instaladas, configure o PostgreSQL
+e crie um novo database para ser usado pelo projeto:
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
 
-## Contributing
+- Configurações iniciais: [Getting Started with PostgreSQL- suite.opengeo.org](http://suite.opengeo.org/docs/latest/dataadmin/pgGettingStarted/firstconnect.html)
+- Após configurar o PostgreSQL, entre no console e crie a base de dados:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+```
+psql -U [usuário (default: postgres)] -W
+[digite sua senha para o usuário postgres]
 
-## Security Vulnerabilities
+[usuário]=# CREATE DATABASE abpresa_dev;
+CREATE DATABASE         // deve aparecer abaixo após criar o database com sucesso 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+// PS: fica criada para o usuário que você colocou após o -U do comando `psql -U [username]`
 
-## License
+[usuário]=# \q           // para sair do console psql
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+## Iniciando o projeto
+
+`git clone https://github.com/gpes-ifpb/abpresa.git`
+
+```
+git flow init       // para quem for desenvolver.
+
+Branch name for production releases: [master] 
+Branch name for "next release" development: [develop]
+
+How to name your supporting branch prefixes?
+Feature branches? [feature/]        // enter
+Bugfix branches? [bugfix/]          // enter
+Release branches? [release/]        // enter
+Hotfix branches? [hotfix/]          // enter
+Support branches? [support/]        // enter
+Version tag prefix? [] v            // não esquecer do "v" aqui
+Hooks and filters directory? [[caminho-para-o-projeto]/abpresa/.git/hooks]      // enter
+```
+
+Você agora possui os arquivos do projeto em seu computador!
+
+## Buscando as dependências do projeto
+
+Uma vez clonado o repositório e o `git flow` configurado, 
+vamos baixar as dependências do projeto:
+
+```
+composer update
+composer install
+```
+
+## Configurando o projeto
+
+Feito isso, vamos configurar o projeto. Na raiz, há um 
+arquivo chamado `.env.example`. Crie uma cópia dele 
+com o nome `.env` apenas, e edite as seguintes linhas:
+
+```
+APP_NAME=ABPRESA
+
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=[database que você criou anteriormente]
+DB_USERNAME=[usuário que você configurou anteriormente junto com o postgres]
+DB_PASSWORD=[senha do usuário acima]
+```
+
+Agora que a conexão com o banco está configurada, 
+precisamos gerar uma chave secreta. Isso vai atualizar 
+o seu arquivo `.env` com a nova chave gerada.
+
+```
+php artisan key:generate
+```
+
+E rode as migrations para criar as entidades no banco:
+
+```
+php artisan migrate
+```
+
+Para rodar o projeto agora, dê um:
+
+```
+php artisan serve
+```
